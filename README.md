@@ -1,2 +1,2 @@
-# GrafosComp
-My solving of the exercise lists from the course: Graphs and Computability. Puc-Minas 2020, Software Engineering 3st period.
+# Grafos e Computabilidade
+Repositória de exercícios da disciplina Programação Modular 1/2020, curso Engenharia de Software PucMinas.
