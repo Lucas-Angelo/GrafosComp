@@ -3,7 +3,7 @@ package com.lucasangelo;
 import com.lucasangelo.arquivo.*;
 import com.lucasangelo.grafos.componentes.Aresta;
 import com.lucasangelo.grafos.componentes.GrafoInfo;
-import com.lucasangelo.grafos.estruturas.MatrizDeAdjacencia;
+import com.lucasangelo.grafos.estruturas.*;
 
 public class Main {
 
@@ -34,11 +34,13 @@ public class Main {
                 MatrizDeAdjacencia matrizDeAdjacencia = new MatrizDeAdjacencia(grafoInfo, arestas);
                 matrizDeAdjacencia.imprimir();
             } else { // 4 - Não-direcionado e ponderado.
-
+                ListaDeAdjacencia listaDeAdjacencia = new ListaDeAdjacencia(grafoInfo, arestas);
+                listaDeAdjacencia.imprimir();
             }
         } else {
             if(grafoInfo.isPonderado()){ // 3 - Direcionado e ponderado.
-
+                ListaDeAdjacencia listaDeAdjacencia = new ListaDeAdjacencia(grafoInfo, arestas);
+                listaDeAdjacencia.imprimir();
             } else { // 1 - Direcionado e não-ponderado. Matriz de indicência.
 
             }

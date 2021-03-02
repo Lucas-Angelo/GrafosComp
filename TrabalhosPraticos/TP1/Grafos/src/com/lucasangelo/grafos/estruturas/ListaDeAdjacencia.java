@@ -1,47 +1,62 @@
 package com.lucasangelo.grafos.estruturas;
 
+import com.lucasangelo.grafos.componentes.Aresta;
+import com.lucasangelo.grafos.componentes.GrafoInfo;
+
 import java.util.ArrayList;
 
-class GraphRep {
-    //function to add the edge in Adj list
-    static void addEdge(ArrayList<ArrayList<Integer> > adj,
-                        int u, int v)
-    {
-        adj.get(u).add(v);
-        adj.get(v).add(u);
-        // if the graph is directed then only one statement is needed here
+public class ListaDeAdjacencia {
+
+    private int vertices;
+    private ArrayList<ArrayList<Integer> > listaDeAdjacencia;
+    private boolean direcionado;
+
+    private void init(GrafoInfo grafoInfo, Aresta arestas[]){
+        this.vertices = grafoInfo.getQtdVertices();
+        this.direcionado = grafoInfo.isDirecionado();
+        // Criando a lista com a quantidade de vértices
+        this.listaDeAdjacencia = new ArrayList<>(vertices);
+
+        // Criando a lista de possíveis arcos para cada vértice
+        for (int i = 0; i < vertices; i++)
+            listaDeAdjacencia.add(new ArrayList<>());
+
+        // Gerando as relações dos arcos inseridos no arquivo
+        for (int i=0; i<arestas.length; i++){
+            criarArco(listaDeAdjacencia, arestas[i].getOrigem(), arestas[i].getDestino());
+        }
     }
 
-    static void printGraph(ArrayList<ArrayList<Integer>> adj)
+    public ListaDeAdjacencia(GrafoInfo grafoInfo, Aresta arestas[]) {
+        init(grafoInfo, arestas);
+    }
+
+    // Adiciona os arcos/arestas
+    private void criarArco(ArrayList<ArrayList<Integer> > adj, int origem, int destino)
     {
-        for (int i = 0; i < adj.size(); i++) {
-            System.out.println("Adjacency list for vertex " + i);
-            for (int j = 0; j < adj.get(i).size(); j++) {
+        if(this.direcionado) {
+            adj.get(origem).add(destino);
+            adj.get(destino).add(origem);
+        } else {  // Sucessor
+            adj.get(destino).add(origem);
+        }
+    }
+
+    public void imprimir()
+    {
+        System.out.println();
+        for (int i = 0; i < this.listaDeAdjacencia.size(); i++) {
+            System.out.println("Lista de adjacência para o vértice " + i);
+            for (int j = 0; j < this.listaDeAdjacencia.get(i).size(); j++) {
                 if (j!=0)
-                    System.out.print(" -> "+adj.get(i).get(j));
+                    if(direcionado)
+                        System.out.print(" -> " + this.listaDeAdjacencia.get(i).get(j));
+                    else
+                        System.out.print(" - " + this.listaDeAdjacencia.get(i).get(j));
                 else
-                    System.out.print(adj.get(i).get(j));
+                    System.out.print(this.listaDeAdjacencia.get(i).get(j));
             }
             System.out.println();
         }
-    }
-    public static void main(String[] args)
-    {
-        int V = 5;
-        ArrayList<ArrayList<Integer> > graph
-                = new ArrayList<>(V);
-
-        //creating array lists for storing lists
-        for (int i = 0; i < V; i++)
-            graph.add(new ArrayList<>());
-
-        addEdge(graph, 0, 1);
-        addEdge(graph, 0, 2);
-        addEdge(graph, 1, 3);
-        addEdge(graph, 1, 2);
-        addEdge(graph, 3, 4);
-
-
-        printGraph(graph);
     }
 }
