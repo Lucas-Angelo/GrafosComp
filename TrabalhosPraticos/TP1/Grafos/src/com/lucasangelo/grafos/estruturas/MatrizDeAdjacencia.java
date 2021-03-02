@@ -8,13 +8,11 @@ public class MatrizDeAdjacencia {
     private int qtdVertices;
     private int matrizAdjacente[][];
     private Aresta arestas[];
-    private boolean ponderada;
     // private boolean direcionada; // Não tem como definir direção em matriz de adjacência
 
     private void init(GrafoInfo grafoInfo, Aresta arestas[]){
         this.qtdVertices = grafoInfo.getQtdVertices();
         this.matrizAdjacente = new int[grafoInfo.getQtdVertices()][grafoInfo.getQtdVertices()];
-        this.ponderada = grafoInfo.isPonderado();
         this.arestas = arestas;
 
         gerarMatrizDeAdjacencia();
@@ -43,15 +41,7 @@ public class MatrizDeAdjacencia {
     }
 
     public void imprimir() {
-        if(ponderada) {
-            System.out.println("\nPonderada, arcos existentes:");
-            for (int i = 0; i < arestas.length; i++) {
-                System.out.print(arestas[i].getNomeArco() + ", ");
-            }
-        } else {
-            System.out.print("\nNão ponderada");
-        }
-        System.out.println("\n");
+        System.out.println();
         System.out.println("Matriz de Adjacência:");
         for (int i = 0; i < qtdVertices; i++) {
             for (int j = 0; j < qtdVertices; j++) {
