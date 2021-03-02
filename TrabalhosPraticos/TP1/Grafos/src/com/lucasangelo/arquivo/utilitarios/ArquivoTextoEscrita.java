@@ -1,4 +1,4 @@
-package com.lucasangelo.classes;
+package com.lucasangelo.arquivo.utilitarios;
 
 import java.io.*;
 
