@@ -30,7 +30,8 @@ public class MatrizDeAdjacencia {
             for (int j = 0; j < this.qtdVertices; j++) {
                 boolean insere = false;
                 for (int k = 0; k < arestas.length; k++) {
-                    if ((arestas[k].getOrigem() == i && arestas[k].getDestino() == j)||(arestas[k].getOrigem() == j && arestas[k].getDestino() == i && !this.direcionado)) {
+                    //if ((arestas[k].getOrigem() == i && arestas[k].getDestino() == j)||(arestas[k].getOrigem() == j && arestas[k].getDestino() == i && !this.direcionado)) {
+                    if (arestas[k].getOrigem() == i && arestas[k].getDestino() == j) {
                         insere = true;
                     }
                 }

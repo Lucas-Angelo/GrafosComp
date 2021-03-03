@@ -23,11 +23,20 @@ public class Grafo {
         arestas = dados.getArestas();
     }
 
-    public void exibirGrafo(){
-        new MatrizDeAdjacencia(this).imprimir();
-
+    public void exibir(){
+        int modo = 0;
+        if(this.info.isPonderado()){ // Lista adjacente para poder ponderar
+            modo=2;
+        } else {
+            if(this.info.isDirecionado()) { // Matriz de indicência consegue mostrar direção
+                modo=1;
+            } else { // Matriz de adjacência não consegue direcionar pois espelha
+                modo=0;
+            }
+        }
+        exibir(modo);
     }
-    public void exibirGrafo(int modo){
+    public void exibir(int modo){
         switch (modo){
             case 0:
                 new MatrizDeAdjacencia(this).imprimir();

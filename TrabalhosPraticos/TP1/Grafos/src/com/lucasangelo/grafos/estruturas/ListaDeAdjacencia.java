@@ -27,7 +27,7 @@ public class ListaDeAdjacencia {
         for ( int i=0; i<this.vertices; i++ ){
             arcoOrigem[i] = indexArcoDestino;
             for ( int j=0; j<arestas.length; j++ ){
-                if (arestas[i].getOrigem() == j){
+                if (arestas[j].getOrigem() == i){
                     arcoDestino[indexArcoDestino][0] = arestas[j].getDestino();
                     arcoDestino[indexArcoDestino][1] = arestas[j].getPeso();
                     indexArcoDestino++;
@@ -44,22 +44,16 @@ public class ListaDeAdjacencia {
 
     public void imprimir(){
 
-        System.out.println();
-        for (int i=0;i<arcoOrigem.length;i++){
-            System.out.print(arcoOrigem[i] + " - ");
-        }
-        System.out.println();
-        for (int i=0;i<arcoDestino.length;i++){
-            System.out.print(arcoDestino[i][0] + " - ");
-        }
-
         System.out.println("\nLista de adjacência");
         for ( int i=0; i<arcoOrigem.length-1;i++ ){
             System.out.print(i+1 + " |");
             for (int j=arcoOrigem[i]; j<arcoOrigem[i+1]; j++){
-                System.out.print(" -> " + arcoDestino[j][0]);
+                if(this.direcionado)
+                    System.out.print(" -> " + (arcoDestino[j][0]+1));
+                else
+                    System.out.print(" - " + (arcoDestino[j][0]+1));
                 if (this.ponderado)
-                    System.out.print(" (" + arcoDestino[j][1] + ")");
+                    System.out.print(" (Peso: " + arcoDestino[j][1] + ")");
                 
             }
             System.out.println();
