@@ -1,6 +1,7 @@
 package com.lucasangelo.grafos.estruturas;
 
 import com.lucasangelo.grafos.componentes.Aresta;
+import com.lucasangelo.grafos.componentes.Grafo;
 import com.lucasangelo.grafos.componentes.GrafoInfo;
 
 public class MatrizDeIncidencia {
@@ -9,26 +10,28 @@ public class MatrizDeIncidencia {
     private int matrizDeIncidencia[][];
     private Aresta arestas[];
     private boolean ponderada;
+    private boolean direcionado;
     // private boolean direcionada; // Não tem como definir direção em matriz de adjacência
 
     private void init(GrafoInfo grafoInfo, Aresta arestas[]){
         this.qtdVertices = grafoInfo.getQtdVertices();
         this.matrizDeIncidencia = new int[grafoInfo.getQtdVertices()][arestas.length];
         this.ponderada = grafoInfo.isPonderado();
+        this.direcionado = grafoInfo.isDirecionado();
         this.arestas = arestas;
 
-        gerarMatrizDeAdjacencia();
+        gerarMatrizDeIncidencia();
     }
 
-    public MatrizDeIncidencia(GrafoInfo grafoInfo, Aresta arestas[]){
-        init(grafoInfo, arestas);
+    public MatrizDeIncidencia(Grafo grafo){
+        init(grafo.getInfo(), grafo.getArestas());
     }
 
-    private void gerarMatrizDeAdjacencia() {
-        int a, b;
+    private void gerarMatrizDeIncidencia() {
+        int negativo = direcionado ? -1 : 1 ;
         for (int i = 0; i < this.arestas.length; i++) {
             matrizDeIncidencia[this.arestas[i].getOrigem()][i] = 1;
-            matrizDeIncidencia[this.arestas[i].getDestino()][i] = -1;
+            matrizDeIncidencia[this.arestas[i].getDestino()][i] = negativo;
         }
     }
 

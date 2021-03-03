@@ -1,46 +1,29 @@
 package com.lucasangelo;
 
-import com.lucasangelo.arquivo.*;
-import com.lucasangelo.grafos.componentes.Aresta;
-import com.lucasangelo.grafos.componentes.GrafoInfo;
-import com.lucasangelo.grafos.estruturas.*;
+import com.lucasangelo.grafos.componentes.Grafo;
 
 public class Main {
 
     public static void main(String[] args) throws Exception {
         /*
             Arquivo: grafo.in
-            Primeira linha: 0 para não direcionado, 1 para direcionado
-            Segunda linha: 0 para não ponderado, 1 para ponderado
-            Terceira linha: quantidade de vértices
-        */
-        GrafoInfo grafoInfo = new GrafoInfo();
 
-        /*
-            Arquivo: arestas.in
+            Primeira linha - Metadados do grafo, sendo 3 divididos por espaços
+            Primeiro dado: 0 para não direcionado, 1 para direcionado
+            Segundo dado: 0 para não ponderado, 1 para ponderado
+            Terceiro dado: quantidade de vértices
+
+            Demais linhas - Vertices
             Quantidade de linhas é a quantida de arestas
             Exemplo da linha de arco entre os vértices 1 e 2: 1,2
-        */
-        Aresta arestas[] = DadosDeArquivos.capturarArestas(grafoInfo.getQtdVertices(), grafoInfo.isDirecionado());
+            Exemplo da linha de arco entre os vértices ponderados 1 e 2 com peso 5: 1,2,5
 
-        // CONDICIONAL PROCURANDO A MELHOR ESTRUTURA
-        if(!grafoInfo.isDirecionado()) {
-            if(!grafoInfo.isPonderado()) { // 2 - Não-direcionado e não-ponderado.
-                MatrizDeAdjacencia matrizDeAdjacencia = new MatrizDeAdjacencia(grafoInfo, arestas);
-                matrizDeAdjacencia.imprimir();
-            } else { // 4 - Não-direcionado e ponderado.
-                ListaDeAdjacencia listaDeAdjacencia = new ListaDeAdjacencia(grafoInfo, arestas);
-                listaDeAdjacencia.imprimir();
-            }
-        } else {
-            if(grafoInfo.isPonderado()){ // 3 - Direcionado e ponderado.
-                ListaDeAdjacencia listaDeAdjacencia = new ListaDeAdjacencia(grafoInfo, arestas);
-                listaDeAdjacencia.imprimir();
-            } else { // 1 - Direcionado e não-ponderado. Matriz de indicência.
-                MatrizDeIncidencia matrizDeIncidencia = new MatrizDeIncidencia(grafoInfo, arestas);
-                matrizDeIncidencia.imprimir();
-            }
-        }
+        */
+        Grafo graph = new Grafo("grafo.in");
+        graph.exibirGrafo();
+        graph.exibirGrafo(0);
+        graph.exibirGrafo(1);
+        graph.exibirGrafo(2);
 
     }
 
@@ -53,7 +36,7 @@ public class Main {
 *   Grafo não-direcionado e não-ponderado, foi esolhida a Matriz de Adjacência:
 *       Pois uma matriz de adjacência não tem como mostrar
 *       direção e nem o ponderar as arestas direto na matriz.
-*       Consegue cumprir a função, porém, tem muitos zeros...
+*       Consegue cumprir a função, sendo a estrutura mais simples, porém, tem muitos zeros...
 *
 *   Grafo não-direcional e ponderado, foi escolhida a Lista de Adjacência:
 *       Pois com a lista é possível imprimir a ponderação

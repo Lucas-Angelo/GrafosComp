@@ -1,18 +1,15 @@
 package com.lucasangelo.grafos.componentes;
 
-import com.lucasangelo.arquivo.DadosDeArquivos;
-
 public class GrafoInfo {
 
     private boolean direcionado;
     private boolean ponderado;
     private int qtdVertices;
 
-    private void init() throws Exception {
-        int dadosGrafo[] = DadosDeArquivos.capturarDadosGrafo();
-        this.direcionado = (dadosGrafo[0]==1) ? true : false;
-        this.ponderado = (dadosGrafo[1]==1) ? true : false;
-        this.qtdVertices = dadosGrafo[2];
+    private void init(boolean direcionado, boolean ponderado, int qtdVertices) throws Exception {
+        this.direcionado = direcionado;
+        this.ponderado = ponderado;
+        this.qtdVertices = qtdVertices;
 
         if(qtdVertices<=0)
             throw new Exception("Não é possível gerar grafos sem vértices");
@@ -25,8 +22,8 @@ public class GrafoInfo {
 
     }
 
-    public GrafoInfo() throws Exception {
-        init();
+    public GrafoInfo(boolean direcionado, boolean ponderado, int qtdVertices) throws Exception {
+        init(direcionado, ponderado, qtdVertices);
     }
 
     public boolean isDirecionado() {

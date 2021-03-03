@@ -2,77 +2,89 @@ package com.lucasangelo.arquivo;
 
 import com.lucasangelo.arquivo.utilitarios.ArquivoTextoLeitura;
 import com.lucasangelo.grafos.componentes.Aresta;
+import com.lucasangelo.grafos.componentes.GrafoInfo;
 
-public class DadosDeArquivos {
+public class DadosDeArquivos{
 
-    public static int[] capturarDadosGrafo() {
-        ArquivoTextoLeitura leitura = new ArquivoTextoLeitura();
-        leitura.abrirArquivo("grafo.in");
+    private String arquivoStr;
+    private ArquivoTextoLeitura leitura;
+    private GrafoInfo grafoInfo;
+    private Aresta[] arestas;
 
-        // Capturando se é direcionado e/ou ponderado; e a quantidade de vértices
-        String linha = new String("");
-        int qtdDados=0;
-        while (linha != null){
-            linha = leitura.ler();
-            if(linha!=null)
-                qtdDados++;
-        }
-        leitura.fecharArquivo();
-
-        leitura.abrirArquivo("grafo.in");
-        String dadosStr[] = new String[qtdDados];
-        int i=0;
-        while (i<qtdDados){
-            dadosStr[i] = leitura.ler();
-            i++;
-        }
-        leitura.fecharArquivo();
-
-        int dados[] = new int[qtdDados];
-        for(i=0; i<qtdDados; i++){
-            dados[i] = Integer.parseInt(dadosStr[i]);
-        }
-
-        return dados;
+    public DadosDeArquivos(String arquivoStr) throws Exception{
+        this.arquivoStr = arquivoStr;
+        init();
     }
 
-    public static Aresta[] capturarArestas(int vertices, boolean direcionado) throws Exception {
-        ArquivoTextoLeitura leitura = new ArquivoTextoLeitura();
-        leitura.abrirArquivo("arestas.in");
+    private void init() throws Exception{
+        this.leitura = new ArquivoTextoLeitura();
+        this.leitura.abrirArquivo(this.arquivoStr);
 
+        capturarDadosGrafo();
+        capturarArestas();
+        
+    }
+
+    private void capturarDadosGrafo() throws Exception{
+        String[] info;
+
+        try {
+            info = this.leitura.ler().split(" ", 3);
+        } catch (Exception e) {
+            throw new Exception("A formatação da primeira linha deve seguir o seguinte padrão: ( 0 0 5 ), sendo respectivamente se é direcionado, ponderado e a quantidade de vertices");
+        }
+        boolean direcionado = info[0].equals("1");
+        boolean ponderado = info[1].equals("1");
+        int vertices = Integer.parseInt(info[2]);
+        grafoInfo = new GrafoInfo(direcionado, ponderado, vertices);
+    }
+
+    private void capturarArestas() throws Exception {
         String linha = new String("");
         int qtdArestas=0;
         while (linha != null){
-            linha = leitura.ler();
+            linha = this.leitura.ler();
             if(linha!=null)
                 qtdArestas++;
         }
-        leitura.fecharArquivo();
+        this.leitura.fecharArquivo();
 
-        int maximoDeArestas = ((vertices -1) * vertices)/2;
-        if(qtdArestas>maximoDeArestas && !direcionado)
-            throw new Exception(String.format("Quantidade de arestas inválidas! Máximo para um grafo não direcionado de %d vertices é %d", vertices, maximoDeArestas));
+        int qtdVertices = grafoInfo.getQtdVertices();
+        int maximoDeArestas = ((qtdVertices -1) * qtdVertices)/2;
+        if(qtdArestas>maximoDeArestas && !grafoInfo.isDirecionado())
+            throw new Exception(String.format("Quantidade de arestas inválidas! Máximo para um grafo não direcionado de %d vertices é %d", qtdVertices, maximoDeArestas));
 
-        leitura.abrirArquivo("arestas.in");
+        this.leitura.abrirArquivo(arquivoStr);
+        this.leitura.ler(); //pulando linha de informações
         String arestasStr[] = new String[qtdArestas];
         int i=0;
         while (i<qtdArestas){
-            arestasStr[i] = leitura.ler();
+            arestasStr[i] = this.leitura.ler();
             i++;
         }
-        leitura.fecharArquivo();
+        this.leitura.fecharArquivo();
 
-        Aresta arestas[] = new Aresta[qtdArestas];
+        arestas = new Aresta[qtdArestas];
 
-        int dados[] = new int[qtdArestas];
         for(i=0; i<qtdArestas; i++){
-            String[] dadosLinha = arestasStr[i].split(",", 2);
+            String[] dadosLinha = arestasStr[i].split(",");
             int origem = Integer.parseInt(dadosLinha[0])-1;
             int destino = Integer.parseInt(dadosLinha[1])-1;
-            arestas[i] = new Aresta(origem, destino);
+            if (grafoInfo.isPonderado()){
+                int peso = Integer.parseInt(dadosLinha[2]);
+                arestas[i] = new Aresta(origem, destino, peso);
+            }
+            else
+                arestas[i] = new Aresta(origem, destino);
         }
+    
+    }
 
+    public Aresta[] getArestas() {
         return arestas;
+    }
+    public GrafoInfo getGrafoInfo() {
+        return grafoInfo;
     }
 
 }
