@@ -9,7 +9,7 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
         /*
-            Arquivo: grafo.in
+            Arquivos. Exemplo: grafo.in
 
             Primeira linha - Metadados do grafo, sendo 3 divididos por espaços
             Primeiro dado: 0 para não direcionado, 1 para direcionado
@@ -23,7 +23,7 @@ public class Main {
 
         */
         System.out.println("Menu de opções para grafos:");
-        System.out.println("1 - Para Direcionado Não-Ponderado");
+        System.out.println("1 - Direcionado Não-Ponderado");
         System.out.println("2 - Não-Direcionado Não-Ponderado");
         System.out.println("3 - Direcionado Ponderado");
         System.out.println("4 - Não-Direcionado Ponderado");
@@ -49,7 +49,7 @@ public class Main {
             default:
                 graph = new Grafo();
         }
-        graph.exibir();
+        graph.exibir(1); // Decidimos que Lista de adjacência é melhor pra todos os casos, ela é a opção 2
 
     }
 

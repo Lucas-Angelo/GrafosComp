@@ -28,9 +28,9 @@ public class Grafo {
         if(this.info.isPonderado()){ // Lista adjacente para poder ponderar
             modo=2;
         } else {
-            if(this.info.isDirecionado()) { // Matriz de indicência consegue mostrar direção
+            if(this.info.isDirecionado()) {
                 modo=1;
-            } else { // Matriz de adjacência não consegue direcionar pois espelha
+            } else {
                 modo=0;
             }
         }
