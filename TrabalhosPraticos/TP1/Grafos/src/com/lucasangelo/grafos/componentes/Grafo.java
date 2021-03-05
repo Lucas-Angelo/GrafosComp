@@ -24,19 +24,11 @@ public class Grafo {
     }
 
     public void exibir(){
-        int modo = 0;
-        if(this.info.isPonderado()){ // Lista adjacente para poder ponderar
-            modo=2;
-        } else {
-            if(this.info.isDirecionado()) {
-                modo=1;
-            } else {
-                modo=0;
-            }
-        }
-        exibir(modo);
+        // a lista de adjacência (2) é o método que vimos como mais recomendados para todos os 4 tipos de grafos
+        exibir(2);
     }
     public void exibir(int modo){
+        //essa função existe para que seja possível visualizar o grafo em qualquer estrutura, mesmo que não seja a que consideramos mais viável
         switch (modo){
             case 0:
                 new MatrizDeAdjacencia(this).imprimir();

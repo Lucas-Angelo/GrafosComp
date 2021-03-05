@@ -7,16 +7,15 @@ import com.lucasangelo.grafos.componentes.GrafoInfo;
 public class MatrizDeAdjacencia {
 
     private int qtdVertices;
-    private int matrizAdjacente[][];
     private boolean direcionado;
+    private int matrizAdjacente[][];
     private Aresta arestas[];
-    // private boolean direcionada; // Não tem como definir direção em matriz de adjacência
 
     private void init(GrafoInfo grafoInfo, Aresta arestas[]){
         this.qtdVertices = grafoInfo.getQtdVertices();
         this.matrizAdjacente = new int[grafoInfo.getQtdVertices()][grafoInfo.getQtdVertices()];
-        this.direcionado = grafoInfo.isDirecionado();
         this.arestas = arestas;
+        this.direcionado = grafoInfo.isDirecionado();
 
         gerarMatrizDeAdjacencia();
     }
@@ -30,8 +29,7 @@ public class MatrizDeAdjacencia {
             for (int j = 0; j < this.qtdVertices; j++) {
                 boolean insere = false;
                 for (int k = 0; k < arestas.length; k++) {
-                    //if ((arestas[k].getOrigem() == i && arestas[k].getDestino() == j)||(arestas[k].getOrigem() == j && arestas[k].getDestino() == i && !this.direcionado)) {
-                    if (arestas[k].getOrigem() == i && arestas[k].getDestino() == j) {
+                    if ((arestas[k].getOrigem() == i && arestas[k].getDestino() == j)||(arestas[k].getOrigem() == j && arestas[k].getDestino() == i && !this.direcionado)) {
                         insere = true;
                     }
                 }

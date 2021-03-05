@@ -49,7 +49,7 @@ public class Main {
             default:
                 graph = new Grafo();
         }
-        graph.exibir(1); // Decidimos que Lista de adjacência é melhor pra todos os casos, ela é a opção 2
+        graph.exibir(); // Decidimos que Lista de adjacência é melhor pra todos os casos, ela é a opção 2
 
     }
 

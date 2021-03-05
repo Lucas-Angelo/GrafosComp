@@ -6,10 +6,12 @@ public class Aresta {
     private int peso;
 
     public Aresta (int origem, int destino) {
-        this.origem = origem;
-        this.destino = destino;
+        init(origem, destino, 1);
     }
     public Aresta (int origem, int destino, int peso) {
+        init(origem, destino, peso);
+    }
+    private void init(int origem, int destino, int peso){
         this.origem = origem;
         this.destino = destino;
         this.peso = peso;
