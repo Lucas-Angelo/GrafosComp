@@ -24,20 +24,19 @@ public class SubGrafos {
         int n=this.vertices;
 
         for(int k=2; k<=n; k++) {
-            qtd += calcular(k, n);
+            double cal = expressao(n, k);
+            qtd += cal * Math.pow(2, expressao(k, 2));
         }
-        qtd += fatorial(n/1);
+        qtd += n/1;
 
         return qtd;
     }
 
-    private double calcular(int k, int n) {
-        double result = (fatorial(n))/( (fatorial(k)) * (fatorial(n-k)) ) * Math.pow(2, (k));
-        return result;
+    private double expressao(int n, int k) {
+        return (fatorial(n)/(fatorial(k)*fatorial(n-k)));
     }
 
-    private double fatorial(double num)
-    {
+    private double fatorial(double num) {
         if (num >= 1.0)
             return num * fatorial(num - 1.0);
         else
