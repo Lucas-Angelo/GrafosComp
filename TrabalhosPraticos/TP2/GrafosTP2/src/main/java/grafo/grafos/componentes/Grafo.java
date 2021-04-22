@@ -1,5 +1,11 @@
-import grafo.grafos.componentes.*;
+package grafo.grafos.componentes;
+
 import grafo.grafos.estruturas.*;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+
+import grafo.arquivo.*;
 
 public class Grafo {
 
@@ -45,9 +51,30 @@ public class Grafo {
         
     // }
 
-    // public void ciclosEmProfundidade() {
-    //     Profundidade ciclos = new Profundidade(arestas);
-    // }
+    public void ciclosEmProfundidade() {
+        boolean[] acessados = new boolean[this.info.getQtdVertices()];
+        for (int i = 0; i < acessados.length; i++) 
+            acessados[i] = false;
+        ciclosEmProfundidade(0, -1, acessados);
+    }
+    private void ciclosEmProfundidade(int vertice, int pai, boolean[] acessados){
+        System.out.println(pai+1+"-"+(vertice+1));
+        if (acessados[vertice]){
+            //add ciclo
+            System.out.println();
+            return;
+        }
+        boolean[] cpyAcessados = acessados.clone();
+        cpyAcessados[vertice] = true;
+        int[] adjacentes = this.estrutura.getAdjacentes(vertice);
+        for (int adjacente : adjacentes) {
+            if (adjacente != pai){
+                ciclosEmProfundidade(adjacente, vertice, cpyAcessados);
+            }
+            
+        }
+        
+    }
 
     public Aresta[] getArestas() {
         return this.arestas;

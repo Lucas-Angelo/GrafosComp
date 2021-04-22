@@ -41,4 +41,23 @@ public class Aresta {
         this.peso = peso;
     }
 
+    @Override
+    public int compareTo(Aresta aresta){
+        if (this.equals(aresta))
+            return 0; 
+        if (this.origem > aresta.origem)
+            return 1;
+        else if (this.origem < aresta.origem)
+            return -1;
+        else{
+            if (this.destino > aresta.destino)
+                return 1;
+            else if (this.destino < aresta.destino)
+                return -1;
+            else
+                return 0;
+        }
+        
+    }
+
 }

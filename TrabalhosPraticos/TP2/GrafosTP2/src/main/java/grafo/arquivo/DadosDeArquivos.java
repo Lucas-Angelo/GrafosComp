@@ -1,8 +1,8 @@
-package com.lucasangelo.arquivo;
+package grafo.arquivo;
 
-import com.lucasangelo.arquivo.utilitarios.ArquivoTextoLeitura;
-import com.lucasangelo.grafos.componentes.Aresta;
-import com.lucasangelo.grafos.componentes.GrafoInfo;
+import grafo.arquivo.utilitarios.ArquivoTextoLeitura;
+import grafo.grafos.componentes.Aresta;
+import grafo.grafos.componentes.GrafoInfo;
 
 public class DadosDeArquivos{
 

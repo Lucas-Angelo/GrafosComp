@@ -1,4 +1,4 @@
-package com.lucasangelo.arquivo.utilitarios;
+package grafo.arquivo.utilitarios;
 
 import java.io.*;
 

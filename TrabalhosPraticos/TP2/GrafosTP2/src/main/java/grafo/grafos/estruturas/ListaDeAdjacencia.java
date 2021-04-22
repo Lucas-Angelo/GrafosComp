@@ -1,8 +1,7 @@
-package com.lucasangelo.grafos.estruturas;
+package grafo.grafos.estruturas;
 
-import com.lucasangelo.grafos.componentes.Aresta;
-import com.lucasangelo.grafos.componentes.Grafo;
-import com.lucasangelo.grafos.componentes.GrafoInfo;
+import grafo.grafos.componentes.Aresta;
+import grafo.grafos.componentes.GrafoInfo;
 
 public class ListaDeAdjacencia {
 
@@ -19,15 +18,18 @@ public class ListaDeAdjacencia {
         this.direcionado = grafoInfo.isDirecionado();
         this.ponderado = grafoInfo.isPonderado();
 
-        this.arcoDestino = new int[arestas.length];
-        this.arcoPeso = new int[arestas.length];
+        int arcosLength = direcionado ? arestas.length : arestas.length*2 ;
+
+        this.arcoDestino = new int[arcosLength];
+        this.arcoPeso = new int[arcosLength];
         this.arcoOrigem = new int[this.vertices+1];
         int indexArcoDestino = 0;
         for ( int i=0; i<this.vertices; i++ ){
             arcoOrigem[i] = indexArcoDestino;
             for ( int j=0; j<arestas.length; j++ ){
-                if (arestas[j].getOrigem() == i){
-                    arcoDestino[indexArcoDestino] = arestas[j].getDestino();
+                if (arestas[j].getOrigem() == i || (arestas[j].getDestino() == i && !this.direcionado) ){
+                    int destino = (arestas[j].getOrigem() == i) ? arestas[j].getDestino() : arestas[j].getOrigem(); 
+                    arcoDestino[indexArcoDestino] = destino;
                     arcoPeso[indexArcoDestino] = arestas[j].getPeso();
                     indexArcoDestino++;
                 }
@@ -39,6 +41,28 @@ public class ListaDeAdjacencia {
 
     public ListaDeAdjacencia(GrafoInfo info, Aresta[] arestas) {
         this.init(info, arestas);
+    }
+
+    public int[] getAdjacentes(int vertice){
+        if (vertice>=this.vertices)
+            throw new Error("Vertice nao existe no grafo");
+        int inicio = this.arcoOrigem[vertice];
+        int fim = this.arcoOrigem[vertice+1];
+
+        int size = fim - inicio;
+        int[] adjacentes;
+
+        if (size > 0){
+            adjacentes = new int[size];
+
+            for (int arco=inicio, index=0; arco<fim ; arco++, index++)
+                adjacentes[index] = this.arcoDestino[arco];
+        }
+        else 
+            adjacentes = null;
+
+        return adjacentes;
+        
     }
 
     public String toString(){

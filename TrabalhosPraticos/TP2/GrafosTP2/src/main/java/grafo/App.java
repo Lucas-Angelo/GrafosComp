@@ -2,9 +2,8 @@ package grafo;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import com.lucasangelo.arquivo.*;
-import com.lucasangelo.grafos.componentes.*;
-import com.lucasangelo.grafos.estruturas.*;
+
+import grafo.grafos.componentes.Grafo;
 
 public class App {
 

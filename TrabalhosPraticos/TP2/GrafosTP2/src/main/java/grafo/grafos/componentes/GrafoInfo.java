@@ -1,4 +1,4 @@
-package com.lucasangelo.grafos.componentes;
+package grafo.grafos.componentes;
 
 public class GrafoInfo {
 
