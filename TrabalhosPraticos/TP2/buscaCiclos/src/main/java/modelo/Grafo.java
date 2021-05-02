@@ -1,8 +1,3 @@
-package model;
-
-import controller.DadosDeArquivos;
-import controller.ListaDeAdjacencia;
-
 public class Grafo {
 
     private Aresta[] arestas;
@@ -78,6 +73,11 @@ public class Grafo {
 
     public String toString(){
         return this.estrutura.toString();
+    }
+
+    public void buscarEmProfundidade() {
+        BuscaEmProfundidade buscaEmProfundidade = new BuscaEmProfundidade(arestas);
+        System.out.println(buscaEmProfundidade.toString());
     }
 
 }

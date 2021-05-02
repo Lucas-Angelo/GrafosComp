@@ -1,5 +1,3 @@
-package model;
-
 public class Aresta {
     private int origem;
     private int destino;

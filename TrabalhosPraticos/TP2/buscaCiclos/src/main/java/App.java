@@ -1,5 +1,3 @@
-import model.Grafo;
-
 public class App {
 
     public static void main(String[] args) throws Exception {
@@ -18,9 +16,10 @@ public class App {
 
         */
         
-        Grafo graph = new Grafo();
-        System.out.println(graph.toString());
-        graph.ciclosEmProfundidade();
+        Grafo graph = new Grafo("grafo.in");
+        System.out.println(graph);
+        //graph.ciclosEmProfundidade();
+        graph.buscarEmProfundidade();
 
     }
 }

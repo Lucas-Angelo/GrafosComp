@@ -1,5 +1,3 @@
-package model;
-
 public class GrafoInfo {
 
     private boolean direcionado;

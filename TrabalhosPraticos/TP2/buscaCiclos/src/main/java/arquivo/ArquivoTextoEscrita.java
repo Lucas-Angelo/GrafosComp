@@ -1,5 +1,3 @@
-package file;
-
 import java.io.*;
 
 public class ArquivoTextoEscrita {

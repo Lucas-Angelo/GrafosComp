@@ -1,8 +1,3 @@
-package controller;
-
-import model.Aresta;
-import model.GrafoInfo;
-
 public class ListaDeAdjacencia {
 
     private int vertices;
@@ -13,7 +8,7 @@ public class ListaDeAdjacencia {
     private int[] arcoDestino;
     private int[] arcoPeso;
 
-    private void init(GrafoInfo grafoInfo, Aresta arestas[]){
+    private void init(GrafoInfo grafoInfo, Aresta[] arestas){
         this.vertices = grafoInfo.getQtdVertices();
         this.direcionado = grafoInfo.isDirecionado();
         this.ponderado = grafoInfo.isPonderado();

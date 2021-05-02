@@ -1,12 +1,6 @@
-package controller;
-
-import file.ArquivoTextoLeitura;
-import model.Aresta;
-import model.GrafoInfo;
-
 public class DadosDeArquivos{
 
-    private String arquivoStr;
+    private final String arquivoStr;
     private ArquivoTextoLeitura leitura;
     private GrafoInfo grafoInfo;
     private Aresta[] arestas;
@@ -39,7 +33,7 @@ public class DadosDeArquivos{
     }
 
     private void capturarArestas() throws Exception {
-        String linha = new String("");
+        String linha = "";
         int qtdArestas=0;
         while (linha != null){
             linha = this.leitura.ler();
@@ -55,7 +49,7 @@ public class DadosDeArquivos{
 
         this.leitura.abrirArquivo(arquivoStr);
         this.leitura.ler(); //pulando linha de informações
-        String arestasStr[] = new String[qtdArestas];
+        String[] arestasStr = new String[qtdArestas];
         int i=0;
         while (i<qtdArestas){
             arestasStr[i] = this.leitura.ler();
