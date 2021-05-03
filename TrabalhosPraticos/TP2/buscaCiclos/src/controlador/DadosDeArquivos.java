@@ -1,3 +1,9 @@
+package controlador;
+
+import arquivo.ArquivoTextoLeitura;
+import modelo.Aresta;
+import modelo.GrafoInfo;
+
 public class DadosDeArquivos{
 
     private final String arquivoStr;
