@@ -24,8 +24,8 @@ public class ListaDeAdjacencia {
         this.arcoPeso = new int[arcosLength];
         this.arcoOrigem = new int[this.vertices+1];
         int indexArcoDestino = 0;
-        for ( int i=0; i<this.vertices; i++ ){
-            arcoOrigem[i] = indexArcoDestino;
+        for ( int i=1; i<=this.vertices; i++ ){
+            arcoOrigem[i-1] = indexArcoDestino;
             for ( int j=0; j<arestas.length; j++ ){
                 if (arestas[j].getOrigem() == i || (arestas[j].getDestino() == i && !this.direcionado) ){
                     int destino = (arestas[j].getOrigem() == i) ? arestas[j].getDestino() : arestas[j].getOrigem(); 
@@ -73,9 +73,9 @@ public class ListaDeAdjacencia {
             builder.append(i+1 + " |");
             for (int j=arcoOrigem[i]; j<arcoOrigem[i+1]; j++){
                 if(this.direcionado)
-                    builder.append(" -> " + (arcoDestino[j]+1));
+                    builder.append(" -> " + (arcoDestino[j]));
                 else
-                    builder.append(" - " + (arcoDestino[j]+1));
+                    builder.append(" - " + (arcoDestino[j]));
                 if (this.ponderado)
                     builder.append(" (Peso: " + arcoPeso[j] + ")");
                 
