@@ -1,3 +1,8 @@
+package controlador;
+
+import modelo.Aresta;
+import modelo.GrafoInfo;
+
 public class ListaDeAdjacencia {
 
     private int vertices;

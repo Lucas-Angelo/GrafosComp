@@ -1,3 +1,8 @@
+package controlador;
+
+import modelo.Aresta;
+import modelo.Ciclo;
+
 public class BuscaEmProfundidade {
     
     private int[][] arcos;

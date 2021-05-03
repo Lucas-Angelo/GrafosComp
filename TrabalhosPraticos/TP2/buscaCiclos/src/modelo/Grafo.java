@@ -1,3 +1,9 @@
+package modelo;
+
+import controlador.BuscaEmProfundidade;
+import controlador.DadosDeArquivos;
+import controlador.ListaDeAdjacencia;
+
 public class Grafo {
 
     private Aresta[] arestas;
