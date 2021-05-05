@@ -3,7 +3,6 @@ package modelo;
 import java.util.ArrayList;
 
 public class Ciclo {
-    private Aresta[] arestas;
     private ArrayList<int[]> arco;
 
     public Ciclo() {
