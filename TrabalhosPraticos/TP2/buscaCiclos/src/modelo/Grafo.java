@@ -1,6 +1,7 @@
 package modelo;
 
 import controlador.BuscaEmProfundidade;
+import controlador.BuscaPorPermutacao;
 import controlador.DadosDeArquivos;
 import controlador.ListaDeAdjacencia;
 
@@ -85,5 +86,17 @@ public class Grafo {
         BuscaEmProfundidade buscaEmProfundidade = new BuscaEmProfundidade(arestas);
         System.out.println(buscaEmProfundidade.toString());
     }
+
+    public void buscarPorPermutacao(int n) {
+        int vertices[] = new int[n];
+
+        for(int i=0; i<n; i++)
+            vertices[i] = i+1; // Poderia passar um new int[]{1, 2, 3, 4, 5, 6} no contrutor também
+
+        BuscaPorPermutacao buscaPorPermutacao = new BuscaPorPermutacao(vertices);
+        buscaPorPermutacao.permutar();
+    }
+
+    
 
 }

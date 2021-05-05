@@ -19,9 +19,8 @@ public class App {
         */
         
         Grafo graph = new Grafo("grafo.in");
-        System.out.println(graph);
-        //graph.ciclosEmProfundidade();
         graph.buscarEmProfundidade();
+        graph.buscarPorPermutacao(6);
 
     }
 }

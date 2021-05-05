@@ -3,6 +3,7 @@ package modelo;
 import java.util.ArrayList;
 
 public class Ciclo {
+    private Aresta[] arestas;
     private ArrayList<int[]> arco;
 
     public Ciclo() {
@@ -20,15 +21,15 @@ public class Ciclo {
 //    public Ciclo(Aresta[] arestas) {
 //        this.arestas = arestas;
 //    }
-//
+
 //    public Aresta[] getArestas() {
 //        return this.arestas;
 //    }
-//
+
 //    public void setArestas(Aresta[] arestas) {
 //        this.arestas = arestas;
 //    }
-//
+
 //     @Override
 //     public boolean equals(Object o) {
 //         Aresta arestasOrdenadas = new Aresta();
@@ -40,9 +41,9 @@ public class Ciclo {
 //         }
 //         Ciclo ciclo = (Ciclo) o;
 //         return Objects.equals(this.arestas, ciclo.arestas);
-//        
+       
 //     }
-//
+
 //    @Override
 //    public String toString() {
 //        return "{" +
