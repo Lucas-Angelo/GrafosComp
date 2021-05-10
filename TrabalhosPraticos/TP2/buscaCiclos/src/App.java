@@ -1,5 +1,3 @@
-import java.util.Arrays;
-
 import modelo.Grafo;
 
 public class App { 
