@@ -35,49 +35,6 @@ public class Grafo {
         return this.info;
     }
 
-    // public void ciclosPorPermutacao() {
-    //     int qtdVertices = info.getQtdVertices();
-
-
-    //     List<Ciclo> ciclos;
-    //     //pra cada vertice
-    //     for(int i=0; i<qtdVertices; i++) {
-    //         //encontrar todos os ciclos possíveis com outros vertices
-            
-    //         for(int j=i+1;j<=qtdVertices;j++){
-                
-    //         }
-    //         //verificar se existe cada ciclo no grafo real
-    //         //se exite add, sen faz nada
-            
-    //     }
-        
-    // }
-
-    public void ciclosEmProfundidade() {
-        boolean[] acessados = new boolean[this.info.getQtdVertices()];
-        for (int i = 0; i < acessados.length; i++) 
-            acessados[i] = false;
-        ciclosEmProfundidade(0, -1, acessados);
-    }
-    private void ciclosEmProfundidade(int vertice, int pai, boolean[] acessados){
-        System.out.println(pai+1+"-"+(vertice+1));
-        if (acessados[vertice]){
-            //add ciclo
-            System.out.println();
-            return;
-        }
-        boolean[] cpyAcessados = acessados.clone();
-        cpyAcessados[vertice] = true;
-        int[] adjacentes = this.estrutura.getAdjacentes(vertice);
-        for (int adjacente : adjacentes) {
-            if (adjacente != pai){
-                ciclosEmProfundidade(adjacente, vertice, cpyAcessados);
-            }
-            
-        }
-    }
-
     public String toString(){
         return this.estrutura.toString();
     }
@@ -96,7 +53,5 @@ public class Grafo {
         BuscaPorPermutacao buscaPorPermutacao = new BuscaPorPermutacao(vertices);
         buscaPorPermutacao.permutar();
     }
-
-    
 
 }

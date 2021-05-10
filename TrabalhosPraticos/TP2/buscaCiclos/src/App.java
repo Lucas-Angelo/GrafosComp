@@ -19,6 +19,7 @@ public class App {
         */
         
         Grafo graph = new Grafo("grafo.in");
+        System.out.println(graph.toString());
         graph.buscarEmProfundidade();
         graph.buscarPorPermutacao(6);
 
