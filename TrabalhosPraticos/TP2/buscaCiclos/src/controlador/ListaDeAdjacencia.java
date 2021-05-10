@@ -1,5 +1,8 @@
 package controlador;
 
+import java.util.ArrayList;
+
+import arquivo.ArquivoTextoLeitura;
 import modelo.Aresta;
 import modelo.GrafoInfo;
 
@@ -65,6 +68,22 @@ public class ListaDeAdjacencia {
         
     }
 
+    public void encontrarCicloPermutado(){
+        ArrayList<Integer> caminhos = new ArrayList<Integer>();
+
+        ArquivoTextoLeitura leitura = new ArquivoTextoLeitura();
+        leitura.abrirArquivo("ciclosPermutados.out");
+        String linha = "";
+        while (linha != null){
+            linha = leitura.ler();
+            if(linha!=null)
+                caminhos.add(Integer.parseInt(linha));
+        }
+        leitura.fecharArquivo();
+
+        
+    }
+
     public String toString(){
         StringBuilder builder = new StringBuilder();
 
@@ -83,6 +102,14 @@ public class ListaDeAdjacencia {
             builder.append("\n");
         }
         
+        return builder.toString();
+    }
+
+    public static String arrayToString(int[] array) {
+        StringBuilder builder = new StringBuilder();
+        for(int i : array) {
+            builder.append(i);
+        }
         return builder.toString();
     }
 }

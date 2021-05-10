@@ -1,6 +1,8 @@
+import java.util.Arrays;
+
 import modelo.Grafo;
 
-public class App {
+public class App { 
 
     public static void main(String[] args) throws Exception {
         /*
@@ -23,5 +25,6 @@ public class App {
         graph.buscarEmProfundidade();
         graph.buscarPorPermutacao(6);
 
+        graph.encontrarCicloPermutado();
     }
 }

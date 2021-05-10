@@ -54,4 +54,8 @@ public class Grafo {
         buscaPorPermutacao.permutar();
     }
 
+    public void encontrarCicloPermutado() {
+        estrutura.encontrarCicloPermutado();
+    }
+
 }
