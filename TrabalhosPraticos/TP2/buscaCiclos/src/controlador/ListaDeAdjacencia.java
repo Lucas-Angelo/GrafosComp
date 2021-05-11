@@ -47,6 +47,7 @@ public class ListaDeAdjacencia {
     }
 
     public int[] getAdjacentes(int vertice){
+        vertice -= 1;
         if (vertice>=this.vertices)
             throw new Error("Vertice nao existe no grafo");
         int inicio = this.arcoOrigem[vertice];
