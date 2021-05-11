@@ -18,10 +18,10 @@ public class App {
 
         */
         
-        Grafo graph = new Grafo("grafo.in");
+        Grafo graph = new Grafo("trabalho.in");
         System.out.println(graph.toString());
         graph.buscarEmProfundidade();
-        graph.buscarPorPermutacao(4);
+        graph.buscarPorPermutacao(6);
 
         graph.encontrarCicloPermutado();
     }

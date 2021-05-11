@@ -1,7 +1,5 @@
 package controlador;
 
-import java.util.ArrayList;
-
 import arquivo.ArquivoTextoLeitura;
 import modelo.Aresta;
 import modelo.Ciclo;
@@ -16,6 +14,8 @@ public class ListaDeAdjacencia {
     private int[] arcoOrigem;
     private int[] arcoDestino;
     private int[] arcoPeso;
+
+    private Ciclo ciclos;
 
     private void init(GrafoInfo grafoInfo, Aresta[] arestas){
         this.vertices = grafoInfo.getQtdVertices();
@@ -40,7 +40,7 @@ public class ListaDeAdjacencia {
             }
         }
         arcoOrigem[this.vertices] = indexArcoDestino;
-
+        this.ciclos = new Ciclo();
     }
 
     public ListaDeAdjacencia(GrafoInfo info, Aresta[] arestas) {
@@ -71,8 +71,6 @@ public class ListaDeAdjacencia {
     }
 
     public void encontrarCicloPermutado(){
-        ArrayList<Ciclo> ciclos = new ArrayList<Ciclo>();
-
         ArquivoTextoLeitura leitura = new ArquivoTextoLeitura();
         leitura.abrirArquivo("ciclosPermutados.out");
         String linha = "";
@@ -106,7 +104,17 @@ public class ListaDeAdjacencia {
                         last = Integer.parseInt(linha.substring(i, i+1));
                 }
                 if (hasTheCicle){
-                    System.out.println(linha);
+                    String linhaInt[] = linha.split("", linha.length());
+                    int caminho[] = new int[linha.length()];
+                    for(int i=0; i<linha.length(); i++){
+                        caminho[i] = Integer.parseInt(linhaInt[i]);
+                    }
+                    int[] caminhoOrdenado = ordenarCaminho(caminho);
+                    int[] caminhoOrdenadoEInvertido = inverterCaminho(caminhoOrdenado);
+                    if (caminhoNovo(caminhoOrdenado) && caminhoNovo(caminhoOrdenadoEInvertido)) { // Se tanto o ciclo encontrado tanto o ciclo ordenado for novo, adiciona.
+                        this.ciclos.add(caminhoOrdenado);
+                    }
+                    //System.out.println(linha);
                     //se for um caminho novo
                     //ciclos.add(ciclo);
                 }
@@ -114,7 +122,93 @@ public class ListaDeAdjacencia {
         }
         leitura.fecharArquivo();
 
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("\nCiclos por permutação:\n");
+        for (int i=0; i<this.ciclos.getArco().size(); i++) {
+            int ciclo[] = this.ciclos.getArco().get(i);
+            stringBuilder.append(i+1 + "º" + " ciclo: " + ciclo[0]);
+
+            for (int j = 1; j < ciclo.length; j++) {
+                stringBuilder.append(" - " + ciclo[j]);
+            }
+            
+            stringBuilder.append("\n");
+        }
+        System.out.println(stringBuilder.toString()); 
         
+    }
+
+    // Função que verifica se dois caminhos são iguais
+    private boolean equals(int[] caminhoUm, int[] caminhoDois) {
+        boolean igual = (caminhoUm[0] == caminhoDois[0]) && (caminhoUm.length == caminhoDois.length);
+
+        for (int i = 1; i < caminhoUm.length && igual; i++) {
+            if (caminhoUm[i] != caminhoDois[i]) {
+                igual = false;
+            }
+        }
+
+        return igual;
+    }
+
+    //  Função que compara um caminho com os ciclos já encontrados e retorna true se for novo
+    private boolean caminhoNovo(int[] caminho) {
+        boolean novo = true;
+
+        for(int i = 0; i< this.ciclos.getArco().size() && novo==true; i++) {
+            if (equals(this.ciclos.getArco().get(i), caminho)) {
+                novo = false;
+            }
+        }
+
+        return novo;
+    }
+
+    // Função que cria um array inverso de um caminho, colocar na primeira posição o menor identificador de vértice
+    private int[] inverterCaminho(int[] caminho) {
+        int[] caminhoInvertido = new int[caminho.length];
+
+        for (int i = 0; i < caminho.length; i++) {
+            caminhoInvertido[i] = caminho[caminho.length - i - 1];
+        }
+
+        return ordenarCaminho(caminhoInvertido);
+    }
+
+    // Ordena/gira o caminho para que o primeiro vértice dele seja o de menor identificador
+    private int[] ordenarCaminho(int[] caminho) {
+        int[] caminhoOrdenado = new int[caminho.length];
+        int menorDoCaminho = procurarMenor(caminho);
+        int n;
+
+        for(int i=0; i<caminho.length; i++) {
+            caminhoOrdenado[i] = caminho[i];
+        }
+
+        while (caminhoOrdenado[0] != menorDoCaminho) {
+            n = caminhoOrdenado[0];
+            // Copia o array do caminho uma posição para trás toda vez que faz a repetição.
+            for(int i=0; i<caminhoOrdenado.length-1; i++) {
+                caminhoOrdenado[i] = caminhoOrdenado[i+1];
+            }
+            // Já que o primeiro não é o menor, coloca ele no final do array
+            caminhoOrdenado[caminhoOrdenado.length - 1] = n;
+        }
+
+        return caminhoOrdenado;
+    }
+
+    // Função que procura o menor identificador de vértice em um caminho, usado para ordenar pelo menor
+    private int procurarMenor(int[] caminho) {
+        int menor = caminho[0];
+
+        for (int i=0; i<caminho.length; i++) {
+            if (caminho[i] < menor) {
+                menor = caminho[i];
+            }
+        }
+        
+        return menor;
     }
 
     public String toString(){

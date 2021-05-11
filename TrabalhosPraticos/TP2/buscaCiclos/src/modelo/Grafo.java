@@ -1,6 +1,5 @@
 package modelo;
 
-import arquivo.ArquivoTextoLeitura;
 import controlador.BuscaEmProfundidade;
 import controlador.BuscaPorPermutacao;
 import controlador.DadosDeArquivos;
