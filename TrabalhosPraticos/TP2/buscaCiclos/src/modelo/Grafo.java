@@ -44,14 +44,17 @@ public class Grafo {
         System.out.println(buscaEmProfundidade.toString());
     }
 
-    public void buscarPorPermutacao(int n) {
-        int vertices[] = new int[n];
+    public void buscarPorPermutacao() {
+        int qtdVertices = info.getQtdVertices();
+        int vertices[] = new int[qtdVertices];
 
-        for(int i=0; i<n; i++)
+        for(int i=0; i<qtdVertices; i++)
             vertices[i] = i+1; // Poderia passar um new int[]{1, 2, 3, 4, 5, 6} no contrutor também
 
         BuscaPorPermutacao buscaPorPermutacao = new BuscaPorPermutacao(vertices);
         buscaPorPermutacao.permutar();
+        
+        estrutura.encontrarCicloPermutado();
     }
 
     public void encontrarCicloPermutado() {

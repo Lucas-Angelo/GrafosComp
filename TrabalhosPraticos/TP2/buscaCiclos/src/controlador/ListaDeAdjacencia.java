@@ -47,27 +47,25 @@ public class ListaDeAdjacencia {
         this.init(info, arestas);
     }
 
-    public int[] getAdjacentes(int vertice){
-        vertice -= 1;
-        if (vertice>=this.vertices)
-            throw new Error("Vertice nao existe no grafo");
-        int inicio = this.arcoOrigem[vertice];
-        int fim = this.arcoOrigem[vertice+1];
+    public String toString(){
+        StringBuilder builder = new StringBuilder();
 
-        int size = fim - inicio;
-        int[] adjacentes;
-
-        if (size > 0){
-            adjacentes = new int[size];
-
-            for (int arco=inicio, index=0; arco<fim ; arco++, index++)
-                adjacentes[index] = this.arcoDestino[arco];
+        builder.append("\nLista de adjacência\n");
+        for ( int i=0; i<arcoOrigem.length-1;i++ ){
+            builder.append(i+1 + " |");
+            for (int j=arcoOrigem[i]; j<arcoOrigem[i+1]; j++){
+                if(this.direcionado)
+                    builder.append(" -> " + (arcoDestino[j]));
+                else
+                    builder.append(" - " + (arcoDestino[j]));
+                if (this.ponderado)
+                    builder.append(" (Peso: " + arcoPeso[j] + ")");
+                
+            }
+            builder.append("\n");
         }
-        else 
-            adjacentes = null;
-
-        return adjacentes;
         
+        return builder.toString();
     }
 
     public void encontrarCicloPermutado(){
@@ -109,14 +107,12 @@ public class ListaDeAdjacencia {
                     for(int i=0; i<linha.length(); i++){
                         caminho[i] = Integer.parseInt(linhaInt[i]);
                     }
+                    // Colocar o menor vertice no inicio e verifica se é um ciclo repetido, se não for, adiciona ciclo
                     int[] caminhoOrdenado = ordenarCaminho(caminho);
                     int[] caminhoOrdenadoEInvertido = inverterCaminho(caminhoOrdenado);
                     if (caminhoNovo(caminhoOrdenado) && caminhoNovo(caminhoOrdenadoEInvertido)) { // Se tanto o ciclo encontrado tanto o ciclo ordenado for novo, adiciona.
                         this.ciclos.add(caminhoOrdenado);
                     }
-                    //System.out.println(linha);
-                    //se for um caminho novo
-                    //ciclos.add(ciclo);
                 }
             }
         }
@@ -135,6 +131,29 @@ public class ListaDeAdjacencia {
             stringBuilder.append("\n");
         }
         System.out.println(stringBuilder.toString()); 
+        
+    }
+
+    public int[] getAdjacentes(int vertice){
+        vertice -= 1;
+        if (vertice>=this.vertices)
+            throw new Error("Vertice nao existe no grafo");
+        int inicio = this.arcoOrigem[vertice];
+        int fim = this.arcoOrigem[vertice+1];
+
+        int size = fim - inicio;
+        int[] adjacentes;
+
+        if (size > 0){
+            adjacentes = new int[size];
+
+            for (int arco=inicio, index=0; arco<fim ; arco++, index++)
+                adjacentes[index] = this.arcoDestino[arco];
+        }
+        else 
+            adjacentes = null;
+
+        return adjacentes;
         
     }
 
@@ -211,32 +230,4 @@ public class ListaDeAdjacencia {
         return menor;
     }
 
-    public String toString(){
-        StringBuilder builder = new StringBuilder();
-
-        builder.append("\nLista de adjacência\n");
-        for ( int i=0; i<arcoOrigem.length-1;i++ ){
-            builder.append(i+1 + " |");
-            for (int j=arcoOrigem[i]; j<arcoOrigem[i+1]; j++){
-                if(this.direcionado)
-                    builder.append(" -> " + (arcoDestino[j]));
-                else
-                    builder.append(" - " + (arcoDestino[j]));
-                if (this.ponderado)
-                    builder.append(" (Peso: " + arcoPeso[j] + ")");
-                
-            }
-            builder.append("\n");
-        }
-        
-        return builder.toString();
-    }
-
-    public static String arrayToString(int[] array) {
-        StringBuilder builder = new StringBuilder();
-        for(int i : array) {
-            builder.append(i);
-        }
-        return builder.toString();
-    }
 }
