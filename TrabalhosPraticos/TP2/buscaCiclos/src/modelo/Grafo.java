@@ -53,46 +53,6 @@ public class Grafo {
 
         BuscaPorPermutacao buscaPorPermutacao = new BuscaPorPermutacao(vertices);
         buscaPorPermutacao.permutar();
-
-        ArquivoTextoLeitura file = new ArquivoTextoLeitura();
-        file.abrirArquivo("ciclosPermutados.out");
-
-        String line;
-        int ciclos=0;
-
-        do {
-            line = file.ler();
-            //System.out.println(line);
-            if (line!=null){
-                int last = -1;
-                boolean hasTheCicle = true;
-                //itera o ciclo
-                for ( int i=0; i<=line.length(); i++ ){
-                    if (last>=0){
-                        boolean hasTheEgde = false;
-                        int index = i==line.length() ? 0 : i ;
-                        //itera os adajcentes do vertice
-                        for (int adjacente : this.estrutura.getAdjacentes(Integer.parseInt(line.substring(index, index+1)))) {
-                            if (adjacente == last){
-                                hasTheEgde = true;
-                                break;
-                            }
-                        }
-                        if (!hasTheEgde){
-                            hasTheCicle = false;
-                            break;
-                        }
-
-                    }
-                    if (i<line.length())
-                        last = Integer.parseInt(line.substring(i, i+1));
-                }
-                if (hasTheCicle)
-                    System.out.println(line);
-
-            }
-        } while (line!=null);
-        
     }
 
     public void encontrarCicloPermutado() {

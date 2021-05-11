@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import arquivo.ArquivoTextoLeitura;
 import modelo.Aresta;
+import modelo.Ciclo;
 import modelo.GrafoInfo;
 
 public class ListaDeAdjacencia {
@@ -70,15 +71,46 @@ public class ListaDeAdjacencia {
     }
 
     public void encontrarCicloPermutado(){
-        ArrayList<Integer> caminhos = new ArrayList<Integer>();
+        ArrayList<Ciclo> ciclos = new ArrayList<Ciclo>();
 
         ArquivoTextoLeitura leitura = new ArquivoTextoLeitura();
         leitura.abrirArquivo("ciclosPermutados.out");
         String linha = "";
         while (linha != null){
             linha = leitura.ler();
-            if(linha!=null)
-                caminhos.add(Integer.parseInt(linha));
+            if(linha!=null){
+                int last = -1;
+                boolean hasTheCicle = true;
+                Ciclo cicle = new Ciclo();
+                //itera o ciclo
+                for ( int i=0; i<=linha.length(); i++ ){
+                    if (last>=0){
+                        boolean hasTheEgde = false;
+                        int index = i==linha.length() ? 0 : i ;
+                        //itera os adajcentes do vertice
+                        for (int adjacente : this.getAdjacentes(Integer.parseInt(linha.substring(index, index+1)))) {
+                            if (adjacente == last){
+                                hasTheEgde = true;
+                                int[] newAresta = {Integer.parseInt(linha.substring(index, index+1)),last};
+                                cicle.add(newAresta);
+                                break;
+                            }
+                        }
+                        if (!hasTheEgde){
+                            hasTheCicle = false;
+                            break;
+                        }
+
+                    }
+                    if (i<linha.length())
+                        last = Integer.parseInt(linha.substring(i, i+1));
+                }
+                if (hasTheCicle){
+                    System.out.println(linha);
+                    //se for um caminho novo
+                    //ciclos.add(ciclo);
+                }
+            }
         }
         leitura.fecharArquivo();
 
