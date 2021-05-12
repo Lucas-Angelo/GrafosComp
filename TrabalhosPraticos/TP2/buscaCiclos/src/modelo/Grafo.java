@@ -54,11 +54,11 @@ public class Grafo {
         BuscaPorPermutacao buscaPorPermutacao = new BuscaPorPermutacao(vertices);
         buscaPorPermutacao.permutar();
         
-        estrutura.encontrarCicloPermutado();
+        buscaPorPermutacao.encontrarCicloPermutado(this.estrutura);;
     }
-
+/*
     public void encontrarCicloPermutado() {
         estrutura.encontrarCicloPermutado();
-    }
+    }*/
 
 }
