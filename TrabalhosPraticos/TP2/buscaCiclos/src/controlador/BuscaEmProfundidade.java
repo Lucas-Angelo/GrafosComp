@@ -4,56 +4,33 @@ import modelo.Aresta;
 import modelo.Ciclo;
 
 public class BuscaEmProfundidade {
+
+    private int comparacoes;
     
     private int[][] arcos;
     private Ciclo ciclos;
     
     private void init(Aresta arestas[]) {
+        this.comparacoes = 0;
+        
         this.arcos = new int[arestas.length][2];
         for(int i=0; i<arestas.length; i++) {
             this.arcos[i][0] = arestas[i].getOrigem();
             this.arcos[i][1] = arestas[i].getDestino();
         }
         this.ciclos = new Ciclo();
-
-        for (int i = 0; i < this.arcos.length; i++) {
-            for (int j = 0; j < this.arcos[i].length; j++) {
-                buscarCiclos(new int[]{this.arcos[i][j]});
-            }
-        }
     }
     
     public BuscaEmProfundidade(Aresta[] arestas) {
         init(arestas);
     }
 
-    public String toString() {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("\nCiclos por busca em profundidade:\n");
-        for (int i=0; i<this.ciclos.getArco().size(); i++) {
-            int ciclo[] = this.ciclos.getArco().get(i);
-            stringBuilder.append(i+1 + "º" + " ciclo: " + ciclo[0]);
-
-            for (int j = 1; j < ciclo.length; j++) {
-                stringBuilder.append(" - " + ciclo[j]);
-            }
-            
-            stringBuilder.append("\n");
-        }
-        return stringBuilder.toString();
-    }
-
-    // Função que verifica se dois caminhos são iguais
-    private boolean equals(int[] caminhoUm, int[] caminhoDois) {
-        boolean igual = (caminhoUm[0] == caminhoDois[0]) && (caminhoUm.length == caminhoDois.length);
-
-        for (int i = 1; i < caminhoUm.length && igual; i++) {
-            if (caminhoUm[i] != caminhoDois[i]) {
-                igual = false;
+    public void buscarCiclos() {
+        for (int i = 0; i < this.arcos.length; i++) {
+            for (int j = 0; j < this.arcos[i].length; j++) {
+                buscarCiclos(new int[]{this.arcos[i][j]});
             }
         }
-
-        return igual;
     }
 
     private void buscarCiclos(int[] caminho) {
@@ -92,6 +69,7 @@ public class BuscaEmProfundidade {
         for(int i = 0; i< this.ciclos.getArco().size() && novo==true; i++) {
             if (equals(this.ciclos.getArco().get(i), caminho)) {
                 novo = false;
+                this.comparacoes++;
             }
         }
 
@@ -105,6 +83,7 @@ public class BuscaEmProfundidade {
         for (int i=0; i<caminho.length && visitado==false; i++) {
             if (caminho[i] == vertice) {
                 visitado = true;
+                this.comparacoes++;
             }
         }
         
@@ -152,10 +131,44 @@ public class BuscaEmProfundidade {
         for (int i=0; i<caminho.length; i++) {
             if (caminho[i] < menor) {
                 menor = caminho[i];
+                this.comparacoes++;
             }
         }
         
         return menor;
     }
+
+    // Função que verifica se dois caminhos são iguais
+    private boolean equals(int[] caminhoUm, int[] caminhoDois) {
+        boolean igual = (caminhoUm[0] == caminhoDois[0]) && (caminhoUm.length == caminhoDois.length);
+
+        for (int i = 1; i < caminhoUm.length && igual; i++) {
+            if (caminhoUm[i] != caminhoDois[i]) {
+                igual = false;
+                this.comparacoes++;
+            }
+        }
+
+        return igual;
+    }
+
+    public int getComparacoes() {
+        return this.comparacoes;
+    }
     
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("\nCiclos por busca em profundidade:\n");
+        for (int i=0; i<this.ciclos.getArco().size(); i++) {
+            int ciclo[] = this.ciclos.getArco().get(i);
+            stringBuilder.append(i+1 + "º" + " ciclo: " + ciclo[0]);
+
+            for (int j = 1; j < ciclo.length; j++) {
+                stringBuilder.append(" - " + ciclo[j]);
+            }
+            
+            stringBuilder.append("\n");
+        }
+        return stringBuilder.toString();
+    }
 }

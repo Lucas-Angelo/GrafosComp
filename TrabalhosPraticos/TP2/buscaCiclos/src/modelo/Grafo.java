@@ -40,8 +40,14 @@ public class Grafo {
     }
 
     public void buscarEmProfundidade() {
+
+        long inicio = System.currentTimeMillis(); // Para calcular o tempo de execução do algoritmo de busca em profundidade
         BuscaEmProfundidade buscaEmProfundidade = new BuscaEmProfundidade(arestas);
-        System.out.println(buscaEmProfundidade.toString());
+        buscaEmProfundidade.buscarCiclos(); // Busca os ciclos por busca em profundidade
+        long fim = System.currentTimeMillis(); // Para calcular o tempo de execução do algoritmo de busca em profundidade
+
+        System.out.print(buscaEmProfundidade.toString());
+        System.out.println("Comparações: " + buscaEmProfundidade.getComparacoes() + "\nDuração: " + (fim-inicio) + "ms");
     }
 
     public void buscarPorPermutacao() {
@@ -51,10 +57,14 @@ public class Grafo {
         for(int i=0; i<qtdVertices; i++)
             vertices[i] = i+1; // Poderia passar um new int[]{1, 2, 3, 4, 5, 6} no contrutor também
 
+        long inicio = System.currentTimeMillis(); // Para calcular o tempo de execução do algoritmo de permutação
         BuscaPorPermutacao buscaPorPermutacao = new BuscaPorPermutacao(vertices);
-        buscaPorPermutacao.permutar();
-        
-        buscaPorPermutacao.encontrarCicloPermutado(this.estrutura);;
+        buscaPorPermutacao.permutar(); // Gera todas as permutações de caminhos 
+        buscaPorPermutacao.encontrarCicloPermutado(this.estrutura); // Verifica os caminhos que formam ciclos
+        long fim = System.currentTimeMillis(); // Para calcular o tempo de execução do algoritmo de permutação
+
+        System.out.print(buscaPorPermutacao.toString());
+        System.out.println("Comparações: " + buscaPorPermutacao.getComparacoes() + "\nDuração: " + (fim-inicio) + "ms");
     }
     
 }

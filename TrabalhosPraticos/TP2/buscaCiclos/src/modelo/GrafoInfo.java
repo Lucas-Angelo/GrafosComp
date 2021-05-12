@@ -10,7 +10,7 @@ public class GrafoInfo {
         if(qtdVertices<=0)
             throw new Exception("Não é possível gerar grafos sem vértices");
         
-        System.out.print("\nGrafo simples e não direcionado.");
+        System.out.print("\nGrafo simples e não direcionado. ");
         System.out.println("Quantidade de vértices: " + qtdVertices + ".");
     }
 
