@@ -7,8 +7,6 @@ import modelo.GrafoInfo;
 public class ListaDeAdjacencia {
 
     private int vertices;
-    private boolean direcionado;
-    private boolean ponderado;
 
     private int[] arcoOrigem;
     private int[] arcoDestino;
@@ -18,10 +16,8 @@ public class ListaDeAdjacencia {
 
     private void init(GrafoInfo grafoInfo, Aresta[] arestas){
         this.vertices = grafoInfo.getQtdVertices();
-        this.direcionado = grafoInfo.isDirecionado();
-        this.ponderado = grafoInfo.isPonderado();
 
-        int arcosLength = direcionado ? arestas.length : arestas.length*2 ;
+        int arcosLength = arestas.length*2;
 
         this.arcoDestino = new int[arcosLength];
         this.arcoPeso = new int[arcosLength];
@@ -30,7 +26,7 @@ public class ListaDeAdjacencia {
         for ( int i=1; i<=this.vertices; i++ ){
             arcoOrigem[i-1] = indexArcoDestino;
             for ( int j=0; j<arestas.length; j++ ){
-                if (arestas[j].getOrigem() == i || (arestas[j].getDestino() == i && !this.direcionado) ){
+                if (arestas[j].getOrigem() == i || (arestas[j].getDestino() == i) ){
                     int destino = (arestas[j].getOrigem() == i) ? arestas[j].getDestino() : arestas[j].getOrigem(); 
                     arcoDestino[indexArcoDestino] = destino;
                     arcoPeso[indexArcoDestino] = arestas[j].getPeso();
@@ -53,13 +49,7 @@ public class ListaDeAdjacencia {
         for ( int i=0; i<arcoOrigem.length-1;i++ ){
             builder.append(i+1 + " |");
             for (int j=arcoOrigem[i]; j<arcoOrigem[i+1]; j++){
-                if(this.direcionado)
-                    builder.append(" -> " + (arcoDestino[j]));
-                else
-                    builder.append(" - " + (arcoDestino[j]));
-                if (this.ponderado)
-                    builder.append(" (Peso: " + arcoPeso[j] + ")");
-                
+                builder.append(" - " + (arcoDestino[j]));
             }
             builder.append("\n");
         }
