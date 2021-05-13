@@ -34,32 +34,32 @@ public class BuscaEmProfundidade {
     }
 
     private void buscarCiclos(int[] caminho) {
-            int verticeUm = caminho[0];
-            int verticeTratado;
-            int[] caminhoDerivado= new int[caminho.length + 1];
+        int verticeUm = caminho[0];
+        int verticeTratado;
+        int[] caminhoDerivado= new int[caminho.length + 1];
 
-            for (int i = 0; i < this.arcos.length; i++) {
-                for (int j = 0; j <= 1; j++) {
-                    if (this.arcos[i][j] == verticeUm) { // se o vértice do grafo atual é o mesmo que o primeiro do caminho
-                        verticeTratado = this.arcos[i][(j + 1) % 2];
-                        if (!foiVisitado(verticeTratado, caminho)) { // se o vértice vizinho/adjacente não está no caminho
-                            caminhoDerivado[0] = verticeTratado;
-                            // A posição 0 ocupado com o vértice tratado e o resto inserido a partir do index 1
-                            for (int k = 0; k < caminho.length; k++) {
-                                caminhoDerivado[k + 1] = caminho[k];
-                            }
-                            // Recursividade para buscar os caminhos dentro do caminho atual
-                            buscarCiclos(caminhoDerivado);
-                        } else if ((caminho.length > 2) && (verticeTratado == caminho[caminho.length - 1])) { // Se essa condição for verdadeiro: ciclo entrado
-                            int[] caminhoOrdenado = ordenarCaminho(caminho);
-                            int[] caminhoOrdenadoEInvertido = inverterCaminho(caminhoOrdenado);
-                            if (caminhoNovo(caminhoOrdenado) && caminhoNovo(caminhoOrdenadoEInvertido)) { // Se tanto o ciclo encontrado tanto o ciclo ordenado for novo, adiciona.
-                                this.ciclos.add(caminhoOrdenado);
-                            }
+        for (int i = 0; i < this.arcos.length; i++) {
+            for (int j = 0; j <= 1; j++) {
+                if (this.arcos[i][j] == verticeUm) { // se o vértice do grafo atual é o mesmo que o primeiro do caminho
+                    verticeTratado = this.arcos[i][(j + 1) % 2];
+                    if (!foiVisitado(verticeTratado, caminho)) { // se o vértice vizinho/adjacente não está no caminho
+                        caminhoDerivado[0] = verticeTratado;
+                        // A posição 0 ocupado com o vértice tratado e o resto inserido a partir do index 1
+                        for (int k = 0; k < caminho.length; k++) {
+                            caminhoDerivado[k + 1] = caminho[k];
+                        }
+                        // Recursividade para buscar os caminhos dentro do caminho atual
+                        buscarCiclos(caminhoDerivado);
+                    } else if ((caminho.length > 2) && (verticeTratado == caminho[caminho.length - 1])) { // Se essa condição for verdadeiro: ciclo entrado
+                        int[] caminhoOrdenado = ordenarCaminho(caminho);
+                        int[] caminhoOrdenadoEInvertido = inverterCaminho(caminhoOrdenado);
+                        if (caminhoNovo(caminhoOrdenado) && caminhoNovo(caminhoOrdenadoEInvertido)) { // Se tanto o ciclo encontrado tanto o ciclo ordenado for novo, adiciona.
+                            this.ciclos.add(caminhoOrdenado);
                         }
                     }
                 }
             }
+        }
     }
 
     //  Função que compara um caminho com os ciclos já encontrados e retorna true se for novo
