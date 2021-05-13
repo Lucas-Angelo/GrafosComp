@@ -3,19 +3,17 @@ package modelo;
 public class Aresta {
     private int origem;
     private int destino;
-    private int peso;
     
-    private void init(int origem, int destino, int peso){
+    private void init(int origem, int destino){
         this.origem = origem;
         this.destino = destino;
-        this.peso = peso;
     }
 
     public Aresta (int origem, int destino) {
-        init(origem, destino, 1);
+        init(origem, destino);
     }
     public Aresta (int origem, int destino, int peso) {
-        init(origem, destino, peso);
+        init(origem, destino);
     }
 
     public int getOrigem() {
@@ -32,14 +30,6 @@ public class Aresta {
 
     public void setDestino(int destino) {
         this.destino = destino;
-    }
-
-    public int getPeso() {
-        return peso;
-    }
-
-    public void setPeso(int peso) {
-        this.peso = peso;
     }
 
 }

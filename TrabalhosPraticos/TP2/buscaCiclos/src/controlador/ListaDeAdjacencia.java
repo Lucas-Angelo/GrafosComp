@@ -10,7 +10,6 @@ public class ListaDeAdjacencia {
 
     private int[] arcoOrigem;
     private int[] arcoDestino;
-    private int[] arcoPeso;
 
     private Ciclo ciclos;
 
@@ -20,7 +19,6 @@ public class ListaDeAdjacencia {
         int arcosLength = arestas.length*2;
 
         this.arcoDestino = new int[arcosLength];
-        this.arcoPeso = new int[arcosLength];
         this.arcoOrigem = new int[this.vertices+1];
         int indexArcoDestino = 0;
         for ( int i=1; i<=this.vertices; i++ ){
@@ -29,7 +27,6 @@ public class ListaDeAdjacencia {
                 if (arestas[j].getOrigem() == i || (arestas[j].getDestino() == i) ){
                     int destino = (arestas[j].getOrigem() == i) ? arestas[j].getDestino() : arestas[j].getOrigem(); 
                     arcoDestino[indexArcoDestino] = destino;
-                    arcoPeso[indexArcoDestino] = arestas[j].getPeso();
                     indexArcoDestino++;
                 }
             }
