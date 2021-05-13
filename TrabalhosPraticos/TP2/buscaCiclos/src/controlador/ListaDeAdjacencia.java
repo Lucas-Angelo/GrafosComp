@@ -62,16 +62,12 @@ public class ListaDeAdjacencia {
         int fim = this.arcoOrigem[vertice+1];
 
         int size = fim - inicio;
-        int[] adjacentes;
+        int[] adjacentes = new int[size];
 
         if (size > 0){
-            adjacentes = new int[size];
-
             for (int arco=inicio, index=0; arco<fim ; arco++, index++)
                 adjacentes[index] = this.arcoDestino[arco];
         }
-        else 
-            adjacentes = null;
 
         return adjacentes;
         

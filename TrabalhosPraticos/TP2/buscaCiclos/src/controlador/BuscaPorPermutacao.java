@@ -76,25 +76,22 @@ public class BuscaPorPermutacao {
 
     public void encontrarCicloPermutado(ListaDeAdjacencia grafo){
         this.caminhosPermutados.forEach((caminhoAtual) -> {
-            String caminhoAtualString = new String("");
-            for(int i=0; i<caminhoAtual.length; i++)
-                caminhoAtualString += caminhoAtual[i];
-
             int last = -1;
             boolean hasTheCicle = true;
             Ciclo cicle = new Ciclo();
             //itera o ciclo
-            for ( int i=0; i<=caminhoAtualString.length(); i++ ){
+            for ( int i=0; i<=caminhoAtual.length; i++ ){
                 if (last>=0){
                     this.comparacoes++;
                     boolean hasTheEgde = false;
-                    int index = i==caminhoAtualString.length() ? 0 : i ;
+                    int index = i==caminhoAtual.length ? 0 : i ;
+                    
                     //itera os adajcentes do vertice
-                    for (int adjacente : grafo.getAdjacentes(Integer.parseInt(caminhoAtualString.substring(index, index+1)))) {
+                    for (int adjacente : grafo.getAdjacentes(caminhoAtual[index])) {
                         if (adjacente == last){
                             this.comparacoes++;
                             hasTheEgde = true;
-                            int[] newAresta = {Integer.parseInt(caminhoAtualString.substring(index, index+1)),last};
+                            int[] newAresta = {caminhoAtual[index],last};
                             cicle.add(newAresta);
                             break;
                         }
@@ -106,9 +103,9 @@ public class BuscaPorPermutacao {
                     }
 
                 }
-                if (i<caminhoAtualString.length()){
+                if (i<caminhoAtual.length){
                     this.comparacoes++;
-                    last = Integer.parseInt(caminhoAtualString.substring(i, i+1));
+                    last = caminhoAtual[i];
                 }
             }
             if (hasTheCicle){
