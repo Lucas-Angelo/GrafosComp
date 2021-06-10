@@ -2,6 +2,7 @@ package com.lucasangelo;
 
 import com.lucasangelo.classes.BipartiteGraph;
 import com.lucasangelo.classes.Graph;
+import com.lucasangelo.classes.ShortestPathFloydWarshall;
 import com.lucasangelo.classes.SubGraph;
 
 import java.io.BufferedReader;
@@ -18,6 +19,7 @@ public class Main {
         System.out.println("1 - To calculate the number of subgraphs of an undirected and complete graph");
         System.out.println("2 - To calculate the number of edges of a complete graph");
         System.out.println("3 - To calculate the number of edges in a complete and bipartite graph");
+        System.out.println("4 - To find a shortest path with floyd warshall"); // classes/ShortestPathFloydWarshall.java
 
         System.out.print("Enter your option: ");
         option = Integer.parseInt(in.readLine());
@@ -34,14 +36,14 @@ public class Main {
                 quantityVertices = Integer.parseInt(in.readLine());
                 subGraph = new SubGraph(quantityVertices, true, false);
                 System.out.println("Subgraphs quantity: " + subGraph.getSubGraphsQuantity());
-            break;
+                break;
             case 2:
                 System.out.println("Calculating the number of edges of a complete graph.");
                 System.out.print("Enter the number of vertices: ");
                 quantityVertices = Integer.parseInt(in.readLine());
                 graph = new Graph(quantityVertices, true);
                 System.out.println("Edges quantity: " + graph.getMaxEdgesQuantityCalculator());
-            break;
+                break;
             case 3:
                 System.out.println("Calculate the number of edges in a complete and bipartite graph.");
                 System.out.print("Enter the number of vertices on set one: ");
@@ -50,7 +52,11 @@ public class Main {
                 int quantityVerticesSetTwo =  Integer.parseInt(in.readLine());
                 bipartiteGraph = new BipartiteGraph(quantityVerticesSetOne, quantityVerticesSetTwo, true, true);
                 System.out.println("Edges quantity: " + bipartiteGraph.getMaxEdgesQuantityCalculator());
-            break;
+                break;
+            case 4:
+                ShortestPathFloydWarshall a = new ShortestPathFloydWarshall();
+                a.floydWarshall();
+                break;
             default:
                 System.out.println("Finish.");
         }

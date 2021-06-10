@@ -22,7 +22,7 @@ public class Graph {
 
     public Graph(boolean complete) {
         this.complete = complete;
-        this.bipartite = bipartite;
+        //this.bipartite = bipartite;
     }
 
     public int getMaxEdgesQuantityCalculator() throws Exception {
