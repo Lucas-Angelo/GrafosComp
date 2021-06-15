@@ -1,29 +1,34 @@
 package modelo;
 
 import controlador.DadosDeArquivos;
-import controlador.MatrizDeAdjacencia;
+import controlador.ListaDeAdjacencia;
 
 public class Grafo {
 
     private Aresta[] arestas;
     private GrafoInfo info;
     
-    private MatrizDeAdjacencia estrutura;
+    private ListaDeAdjacencia estrutura;
 
-    private void init(String arquivoStr) throws Exception{
+    private void init( Aresta[] a, GrafoInfo gf){
+        this.arestas = a;
+        this.info = gf;
+
+        this.estrutura = new ListaDeAdjacencia(this.info, this.arestas);
+    }
+    private void initArquivo(String arquivoStr) throws Exception{
         DadosDeArquivos dados = new DadosDeArquivos(arquivoStr);
-
-        this.arestas = dados.getArestas();
-        this.info = dados.getGrafoInfo();
-
-        this.estrutura = new MatrizDeAdjacencia(info, arestas); // Gerar a lista de adjacencia para esse grafo, pra poder imprimir
+        init(dados.getArestas(), dados.getGrafoInfo());
     }
 
     public Grafo() throws Exception{
-        init("grafo.in");
+        initArquivo("grafo.in");
     }
     public Grafo(String arquivoStr) throws Exception{
-        init(arquivoStr);
+        initArquivo(arquivoStr);
+    }
+    public Grafo(Aresta[] a, GrafoInfo gf){
+        init(a.clone(), gf);
     }
 
     public Aresta[] getArestas() {
@@ -32,9 +37,14 @@ public class Grafo {
     public GrafoInfo getInfo() {
         return this.info;
     }
+    public ListaDeAdjacencia getEstrutura() {
+        return estrutura;
+    }
 
     public String toString(){
         return this.estrutura.toString();
     }
+
+    
     
 }
