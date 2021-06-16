@@ -2,6 +2,7 @@ package modelo;
 
 import controlador.DadosDeArquivos;
 import controlador.ListaDeAdjacencia;
+import controlador.MatrizDeAdjacencia;
 
 public class Grafo {
 
@@ -9,12 +10,14 @@ public class Grafo {
     private GrafoInfo info;
     
     private ListaDeAdjacencia estrutura;
+    private MatrizDeAdjacencia matrizDeAdjacencia;
 
     private void init( Aresta[] a, GrafoInfo gf){
         this.arestas = a;
         this.info = gf;
 
         this.estrutura = new ListaDeAdjacencia(this.info, this.arestas);
+        this.matrizDeAdjacencia = new MatrizDeAdjacencia(this.info, arestas);
     }
     private void initArquivo(String arquivoStr) throws Exception{
         DadosDeArquivos dados = new DadosDeArquivos(arquivoStr);
@@ -39,6 +42,10 @@ public class Grafo {
     }
     public ListaDeAdjacencia getEstrutura() {
         return estrutura;
+    }
+
+    public MatrizDeAdjacencia getMatrizDeAdjacencia() {
+        return this.matrizDeAdjacencia;
     }
 
     public String toString(){

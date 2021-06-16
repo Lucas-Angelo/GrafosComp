@@ -1,3 +1,4 @@
+import controlador.BuscaDisjuntos;
 import modelo.Grafo;
 
 public class App { 
@@ -15,6 +16,7 @@ public class App {
         */
         
         Grafo graph = new Grafo("grafo.in");
-        System.out.println(graph.toString());
+        BuscaDisjuntos bd = new BuscaDisjuntos(graph.getMatrizDeAdjacencia(), graph.getInfo());
+        bd.getMaximoCaminhosDisjuntos(0, 7);
     }
 }
