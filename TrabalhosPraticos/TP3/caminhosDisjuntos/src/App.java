@@ -17,6 +17,6 @@ public class App {
         
         Grafo graph = new Grafo("grafo.in");
         BuscaDisjuntos bd = new BuscaDisjuntos(graph.getMatrizDeAdjacencia(), graph.getInfo());
-        bd.getMaximoCaminhosDisjuntos(0, 7);
+        bd.buscarMaximoCaminhosDisjuntos(0, 7);
     }
 }
