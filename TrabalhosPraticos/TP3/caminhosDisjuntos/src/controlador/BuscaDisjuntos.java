@@ -114,15 +114,19 @@ public class BuscaDisjuntos {
                 rGraph[v][u] += path_flow;
 
                 caminhoDisjunto.add(v);
-                System.out.print(v + " ");
+                // System.out.print(v + " ");
                 if(parent[v]==s) {
                     caminhoDisjunto.add(parent[v]);
-                    System.out.print(parent[v]);
-                    this.caminhosDisjuntos.add(caminhoDisjunto.stream().mapToInt(Integer::intValue).toArray());
+                    // System.out.print(parent[v]);
+                    int[] caminhoDisjunto2D = new int[caminhoDisjunto.size()];
+                    for(int o=caminhoDisjunto2D.length-1; o>=0; o--)
+                        caminhoDisjunto2D[(caminhoDisjunto2D.length-1)-o] = caminhoDisjunto.get(o);
+                    
+                    this.caminhosDisjuntos.add(caminhoDisjunto2D);
                 }
                 
             }
-            System.out.println();
+            // System.out.println();
             
  
             // Adicionar fluxo de caminho ao fluxo geral
