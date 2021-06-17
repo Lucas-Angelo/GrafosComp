@@ -22,7 +22,18 @@ public class BuscaDisjuntos {
     }
 
     public void imprimirCaminhosDisjuntos() {
-        
+        // Imprimi os caminhos disjuntos salvos
+        System.out.println("\nCaminhos disjuntos: ");
+        int numDisjunto = 1;
+        for (int[] caminhoD : this.caminhosDisjuntos) {
+        System.out.print(numDisjunto++ + "º: ");
+            for (int y = 0; y < caminhoD.length; y++)
+                if(y == caminhoD.length-1)
+                    System.out.print(caminhoD[y]);
+                else
+                    System.out.print(caminhoD[y] + " -> ");
+            System.out.println();
+        }
     }
 
     // Depois do construtor pode chamar a busca por caminhos disjuntos
@@ -54,9 +65,10 @@ public class BuscaDisjuntos {
         int caminho = 0;
         // Faz a primeira busca em largura pra verificar se existe um caminho entre esses dois
         boolean existeCaminho = buscaEmLargura(grafoResidual, origem, destino, caminhoNaMatrizEncontrado);
+        // loop principal
         for (qtdCaminhos = 0; existeCaminho; qtdCaminhos += caminho) {
             // Encontre a capacidade residual mínima das arestas
-            // ao longo do caminho preenchido pelo BFS. Ou podemos dizer
+            // ao longo do caminho preenchido pelo busca em largura. Ou podemos dizer
             // encontre o fluxo máximo pelo caminho encontrado.
             caminho = 1; // Considerando se existe o caminho
             for (verticeDestinoResidual = destino; verticeDestinoResidual != origem; verticeDestinoResidual = caminhoNaMatrizEncontrado[verticeDestinoResidual]) {
@@ -100,21 +112,10 @@ public class BuscaDisjuntos {
         }
         this.qtdCaminhosDisjuntos = qtdCaminhos;
 
-        // Imprimi os caminhos disjuntos salvos
-        System.out.println("\nCaminhos disjuntos: ");
-        int numDisjunto = 1;
-        for (int[] caminhoD : this.caminhosDisjuntos) {
-        System.out.print(numDisjunto++ + "º: ");
-            for (int y = 0; y < caminhoD.length; y++)
-                if(y == caminhoD.length-1)
-                    System.out.print(caminhoD[y]);
-                else
-                    System.out.print(caminhoD[y] + " -> ");
-            System.out.println();
-        }
+        imprimirCaminhosDisjuntos();
 
         // Imprimi a quantidade de destinos
-        System.out.println("A quantidade máxima de caminhos disjuntos entre " + origem + " e " + destino + " são " + this.qtdCaminhosDisjuntos + ".");
+        System.out.println("A quantidade máxima de caminhos disjuntos entre " + origem + " e " + destino + " é " + this.qtdCaminhosDisjuntos + ".");
     }
 
     // Essa função vai fazer o caminhamento em busca em largura de um vértice origem até um desitno
