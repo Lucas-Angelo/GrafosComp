@@ -10,6 +10,7 @@ public class BuscaDisjuntos {
     private int[][] matrizDeAdjacencia; // É o grafo original em forma de matriz de adjacencia
     private int qtdCaminhosDisjuntos;
     private List<int[]> caminhosDisjuntos; // Onde vai salvar os caminhos disjuntos
+    private int verticeOrigem, verticeDestino;
 
     // Construtor que busca a matriz de adjacencia que fizemos no trabalho 1 
     // Também captura quantidade de vertices e inicia o vetor pra salvar os caminhos disjuntos
@@ -34,16 +35,21 @@ public class BuscaDisjuntos {
                     System.out.print(caminhoD[y] + " -> ");
             System.out.println();
         }
+        // Imprimi a quantidade de destinos
+        System.out.println("A quantidade máxima de caminhos disjuntos entre " + this.verticeOrigem + " e " + this.verticeDestino + " é " + this.qtdCaminhosDisjuntos + ".");
+    
     }
 
     // Depois do construtor pode chamar a busca por caminhos disjuntos
     public void buscarMaximoCaminhosDisjuntos(int vOrigem, int vDestino) {
-        fordEfulkerson(vOrigem, vDestino);
+        this.verticeOrigem = vOrigem;
+        this.verticeDestino = vDestino;
+        fordEfulkerson();
     }
 
     // Fork e Fulkerson adaptado para encontrar os caminhos disjuntos no grafo entre um vértice origem e destino
     // Utiliza a busca em lagura para encontrar os caminhos se existirem e contar
-    private void fordEfulkerson(int origem, int destino) {
+    private void fordEfulkerson() {
         int verticeOrigemResidual, verticeDestinoResidual;
 
         // Cria um gráfico residual com o mesmo tamanho que o original
@@ -64,14 +70,13 @@ public class BuscaDisjuntos {
         int qtdCaminhos = 0;
         int caminho = 0;
         // Faz a primeira busca em largura pra verificar se existe um caminho entre esses dois
-        boolean existeCaminho = buscaEmLargura(grafoResidual, origem, destino, caminhoNaMatrizEncontrado);
+        boolean existeCaminho = buscaEmLargura(grafoResidual, caminhoNaMatrizEncontrado);
         // loop principal
         for (qtdCaminhos = 0; existeCaminho; qtdCaminhos += caminho) {
-            // Encontre a capacidade residual mínima das arestas
-            // ao longo do caminho preenchido pelo busca em largura. Ou podemos dizer
-            // encontre o fluxo máximo pelo caminho encontrado.
+            // Verifica o caminho feito pela busca em largura, começando o caminho pelo destino
+            // indo até a origem e atualizando se o caminho existe 1 ou não existe 0 com o que está no residual
             caminho = 1; // Considerando se existe o caminho
-            for (verticeDestinoResidual = destino; verticeDestinoResidual != origem; verticeDestinoResidual = caminhoNaMatrizEncontrado[verticeDestinoResidual]) {
+            for (verticeDestinoResidual = this.verticeDestino; verticeDestinoResidual != this.verticeOrigem; verticeDestinoResidual = caminhoNaMatrizEncontrado[verticeDestinoResidual]) {
                 verticeOrigemResidual = caminhoNaMatrizEncontrado[verticeDestinoResidual];
                 // Dai verifico se continuo considerando que existe o caminho ou capturo 0 do grafoResidual já que não existe o caminho
                     // é o mínimo entre o 1 e possível 0
@@ -81,7 +86,7 @@ public class BuscaDisjuntos {
             // Lista para salvar o identificador dos vértices do caminho disjunto atual possivelmente encontrado
             List<Integer> caminhoDisjunto = new LinkedList<Integer>();
             // Atualiza a existencia das arestas no grafo residual direcionando ida e vinda
-            for (verticeDestinoResidual = destino; verticeDestinoResidual != origem; verticeDestinoResidual = caminhoNaMatrizEncontrado[verticeDestinoResidual]) {
+            for (verticeDestinoResidual = this.verticeDestino; verticeDestinoResidual != this.verticeOrigem; verticeDestinoResidual = caminhoNaMatrizEncontrado[verticeDestinoResidual]) {
                 verticeOrigemResidual = caminhoNaMatrizEncontrado[verticeDestinoResidual];
                 // Aqui atualiza a existencia da aresta
                 grafoResidual[verticeOrigemResidual][verticeDestinoResidual] -= caminho;
@@ -92,7 +97,7 @@ public class BuscaDisjuntos {
                 // Se o caminho encontrado na busca em largura no grafo residual (vem invertido)
                 // for igual a origem, ou seja, caminho entre sair do destino e ir para origem existe
                 // invertido pois é o residual
-                if (caminhoNaMatrizEncontrado[verticeDestinoResidual] == origem) {
+                if (caminhoNaMatrizEncontrado[verticeDestinoResidual] == this.verticeOrigem) {
                     // Com isso, adiciona o destino
                     caminhoDisjunto.add(caminhoNaMatrizEncontrado[verticeDestinoResidual]);
 
@@ -108,19 +113,16 @@ public class BuscaDisjuntos {
 
             // Verifica se existe caminho ainda passando o grafoResidual atualizado
             // Se existir loop continua verificando tudo novamente
-            existeCaminho = buscaEmLargura(grafoResidual, origem, destino, caminhoNaMatrizEncontrado);
+            existeCaminho = buscaEmLargura(grafoResidual, caminhoNaMatrizEncontrado);
         }
         this.qtdCaminhosDisjuntos = qtdCaminhos;
 
         imprimirCaminhosDisjuntos();
-
-        // Imprimi a quantidade de destinos
-        System.out.println("A quantidade máxima de caminhos disjuntos entre " + origem + " e " + destino + " é " + this.qtdCaminhosDisjuntos + ".");
-    }
+}
 
     // Essa função vai fazer o caminhamento em busca em largura de um vértice origem até um desitno
     // Caso o caminho for encontrado será atualizado no caminhoNaMatrizEncontrado[] e retornará true pois foi encontrado
-    private boolean buscaEmLargura(int grafoResidual[][], int origem, int destino, int caminhoNaMatrizEncontrado[]) {
+    private boolean buscaEmLargura(int grafoResidual[][], int caminhoNaMatrizEncontrado[]) {
         // Marcar todos os vertices como não visitados ainda
         boolean visitado[] = new boolean[this.vertices];
         for (int i = 0; i < this.vertices; ++i)
@@ -129,11 +131,11 @@ public class BuscaDisjuntos {
         // Fila com os vértices que serão adicionados e retirados enquanto procura o caminho disjunto
         Queue<Integer> listaDosVertices = new LinkedList<Integer>();
         // Adicionado na fila a origem de onde quer caminhar e marcando-a como visitada
-        listaDosVertices.add(origem);
-        visitado[origem] = true;
+        listaDosVertices.add(this.verticeOrigem);
+        visitado[this.verticeOrigem] = true;
 
         // Ainda não foi encontrado o caminho
-        caminhoNaMatrizEncontrado[origem] = -1;
+        caminhoNaMatrizEncontrado[this.verticeOrigem] = -1;
 
         // Começa o loop da busca em largura enquanto a lista de vértices não estiver vazia
         while (listaDosVertices.size() != 0) {
@@ -154,7 +156,7 @@ public class BuscaDisjuntos {
                     // Se o verticeDestinoAtual que chegou é igual ao destino:
                         // salva o fim da caminho
                         // e retorna que encontrou o caminho disjunto
-                    if (verticeDestinoAtual == destino) {
+                    if (verticeDestinoAtual == this.verticeDestino) {
                         caminhoNaMatrizEncontrado[verticeDestinoAtual] = verticeOrigemAtual;
                         return true;
                     }
