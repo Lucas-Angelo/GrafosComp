@@ -39,6 +39,10 @@ public class MatrizDeAdjacencia {
         }
     }
 
+    public int[][] getMatriz() {
+        return this.matrizAdjacente;
+    }
+
     public String toString() {
         StringBuilder sb = new StringBuilder("\n");
         sb.append("Matriz de Adjacência:\n");

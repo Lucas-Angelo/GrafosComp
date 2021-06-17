@@ -61,7 +61,6 @@ public class DadosDeArquivos{
             String[] dadosLinha = arestasStr[i].split(",");
             int origem = Integer.parseInt(dadosLinha[0]);
             int destino = Integer.parseInt(dadosLinha[1]);
-            System.out.println(origem + "," + destino);
             arestas[i] = new Aresta(origem, destino);
         }
     
